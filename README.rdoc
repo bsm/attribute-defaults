@@ -2,7 +2,7 @@
 
 Simple ActiveRecord plugin that allows to specify default values for attributes.
 
-== Instalation
+== Installation
 
 Just add <tt>gem attribute-defaults</tt> to your Gemfile.
 

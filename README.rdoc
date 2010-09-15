@@ -35,6 +35,13 @@ It doesn't override values that are already set ...
   end
   Foo.new(:age => 25) # => age: 25
 
+... but allows you to force overrides when e.g. blank ...
+
+  class Foo < ActiveRecord::Base
+    attr_defaults  :name => { :default => 'MUST HAVE', :force => :blank }
+  end
+  Foo.new(:name => '') # => name: 'MUST HAVE'
+
 ... and it respects protected attributes ...
 
   class Foo < ActiveRecord::Base

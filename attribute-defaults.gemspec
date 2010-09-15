@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{attribute-defaults}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dimitrij Denissenko"]
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "attribute-defaults.gemspec",
      "lib/attribute-defaults.rb",
      "lib/attribute_defaults.rb",
      "spec/attribute_defaults_spec.rb",

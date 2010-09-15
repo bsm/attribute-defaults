@@ -28,7 +28,7 @@ module ActiveRecord
         module_eval(<<-EVAL, __FILE__, __LINE__ + 1)
           def #{setter}
             #{'return if persisted?' if options[:persisted] == false}
-            return unless self.#{sym}.send(#{options[:force] == :blank ? ':blank?' : ':nil?'})
+            return unless self.#{sym}.send(:#{options[:if] || 'nil?'})
             value = #{evaluator}(self)
             self.#{sym} = value.duplicable? ? value.dup : value
           rescue ActiveModel::MissingAttributeError

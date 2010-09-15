@@ -38,7 +38,7 @@ class Foo < ActiveRecord::Base
   attr_accessible :name, :age, :locale
   attr_accessor   :birth_year
 
-  attr_default    :description, "(no description)", :force => :blank
+  attr_default    :description, "(no description)", :if => :blank?
   attr_default    :locale, "en", :persisted => false
   attr_default    :birth_year do |f|
     f.age ? Time.now.year - f.age : nil
@@ -46,8 +46,11 @@ class Foo < ActiveRecord::Base
 end
 
 class Bar < Foo
-  attr_accessor   :some_hash
+  attr_accessor   :some_hash, :some_arr
+  attr_accessible :some_arr
+
   attr_default    :some_hash, :default => {}
+  attr_default    :some_arr, :default => [1, 2, 3], :if => :blank?
 end
 
 class Baz < ActiveRecord::Base

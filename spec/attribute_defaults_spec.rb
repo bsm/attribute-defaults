@@ -20,10 +20,14 @@ describe ActiveRecord::AttributesWithDefaults do
     foo.birth_year.should == 30.years.ago.year
   end
 
-  it 'should allow to foce overrides on blank values' do
+  it 'should allow to set custom value conditions' do
     foo(:locale => '', :description => '')
     foo.locale.should == ''
     foo.description.should == '(no description)'
+
+    Bar.new(:some_arr => nil).some_arr.should == [1, 2, 3]
+    Bar.new(:some_arr => []).some_arr.should == [1, 2, 3]
+    Bar.new(:some_arr => [:A, :B]).some_arr.should == [:A, :B]
   end
 
   it 'should not override attributes that were set manually' do

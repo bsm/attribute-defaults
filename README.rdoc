@@ -1,0 +1,103 @@
+= Attribute Defaults (attribute-defaults)
+
+Simple ActiveRecord plugin that allows to specify default values for attributes.
+
+== Instalation
+
+Just add <tt>gem attribute-defaults</tt> to your Gemfile.
+
+Alternatively, run <tt>sudo gem install attribute-defaults</tt> and add
+<tt>require 'attribute_defaults'</tt> to your app.
+
+== Examples
+
+First, a simple case ...
+
+  class Foo < ActiveRecord::Base
+    attr_default :age, 18
+    attr_default :last_seen do
+      Time.now
+    end
+  end
+  Foo.new # => age: 18, last_seen: '2010-09-15 10:30'
+
+... or the same via mass-definition ...
+
+  class Foo < ActiveRecord::Base
+    attr_defaults :age => 18, :last_seen => lambda { Time.now }
+  end
+  Foo.new # => age: 18, last_seen: '2010-09-15 10:30'
+
+It doesn't override values that are already set ...
+
+  class Foo < ActiveRecord::Base
+    attr_defaults :age => 18
+  end
+  Foo.new(:age => 25) # => age: 25
+
+... and it respects protected attributes ...
+
+  class Foo < ActiveRecord::Base
+    attr_protected :age
+    attr_defaults  :age => 18
+  end
+  Foo.new(:age => 25) # => age: 18
+
+When attributes aren't database columns ...
+
+  class Foo < ActiveRecord::Base
+    attr_accessor  :birth_year
+    attr_defaults  :birth_year => lambda {|r| r.age ? Time.now.year - r.age : nil }
+  end
+  Foo.new(:age => 30) # => age: 30, birth_year: 1980
+
+It works with persisted records ...
+
+  # DB table 'foos': [{id: 1, age: NULL}, {id: 2, age: 25}]
+  class Foo < ActiveRecord::Base
+    attr_defaults  :age => 18
+  end
+  Foo.all # => [{id: 1, age: 18}, {id: 2, age: 25}]
+
+... or not ...
+
+  class Foo < ActiveRecord::Base
+    attr_defaults  :age => { :default => 18, :persisted => false }
+  end
+  Foo.all # => [{id: 1, age: nil}, {id: 2, age: 25}]
+
+To specify a Hash as a default value, use ...
+
+  class Foo < ActiveRecord::Base
+    attr_accessor  :some_hash
+    attr_default   :some_hash, :default => {}
+  end
+  Foo.new.some_hash # => {}
+
+== Acknowledgements
+
+Inspired by the default_value_for plugin
+http://github.com/FooBarWidget/default_value_for
+
+= LICENSE
+
+(The MIT License)
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

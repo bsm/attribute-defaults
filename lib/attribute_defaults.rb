@@ -1,3 +1,6 @@
+require 'active_record'
+require 'active_support/concern'
+
 module ActiveRecord
   module AttributesWithDefaults
     extend ActiveSupport::Concern
@@ -20,7 +23,7 @@ module ActiveRecord
 
         evaluator = "__eval_attr_default_for_#{sym}".to_sym
         setter    = "__set_attr_default_for_#{sym}".to_sym
-        block   ||= default.is_a?(Proc) ? default : Proc.new { default }
+        block   ||= default.is_a?(Proc) ? default : proc { default }
 
         after_initialize setter.to_sym
         define_method(evaluator, &block)
@@ -29,7 +32,7 @@ module ActiveRecord
           def #{setter}
             #{'return if persisted?' if options[:persisted] == false}
             return unless self.#{sym}.send(:#{options[:if] || 'nil?'})
-            value = #{evaluator}(self)
+            value = #{evaluator}#{'(self)' unless block.arity.zero?}
             self.#{sym} = value.duplicable? ? value.dup : value
           rescue ActiveModel::MissingAttributeError
           end

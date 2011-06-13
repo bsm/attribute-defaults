@@ -55,5 +55,5 @@ end
 
 class Baz < ActiveRecord::Base
   set_table_name 'foos'
-  attr_defaults :description => "Please set ...", :age => { :default => 18, :persisted => false }, :locale => lambda { 'en-US' }
+  attr_defaults :description => "Please set ...", :age => { :default => 18, :persisted => false }, :locale => proc { 'en-US' }
 end

@@ -74,5 +74,4 @@ describe ActiveRecord::AttributesWithDefaults do
     lambda { Foo.select(:locale).first }.should_not raise_error
   end
 
-
 end

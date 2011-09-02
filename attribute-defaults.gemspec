@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "attribute-defaults"
   s.summary     = "Specify default values for ActiveRecord attributes"
   s.description = "ActiveRecord plugin that allows to specify default values for attributes"
-  s.version     = '0.2.0'
+  s.version     = '0.3.0'
 
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"
@@ -16,6 +16,5 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.files        = Dir['LICENSE', 'README.rdoc', 'lib/**/*']
 
-  s.add_dependency "activerecord", "~> 3.0.0"
-  s.add_dependency "activesupport", "~> 3.0.0"
+  s.add_dependency "activerecord", ">= 3.0.0", "< 3.2.0"
 end

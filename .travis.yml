@@ -4,4 +4,5 @@ rvm:
   - ree
 gemfile:
   - Gemfile
+  - Gemfile.activerecord-3.1.x
   - Gemfile.activerecord-3.0.x

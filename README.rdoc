@@ -4,7 +4,7 @@ Simple ActiveRecord plugin that allows to specify default values for attributes.
 
 == Installation
 
-Just add <tt>gem attribute-defaults</tt> to your Gemfile.
+Just add <tt>gem 'attribute-defaults'</tt> to your Gemfile.
 
 Alternatively, run <tt>sudo gem install attribute-defaults</tt> and add
 <tt>require 'attribute_defaults'</tt> to your app.

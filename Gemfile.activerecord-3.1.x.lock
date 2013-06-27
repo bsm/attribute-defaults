@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    attribute-defaults (0.3.0)
-      activerecord (>= 3.0.0, < 3.3.0)
+    attribute-defaults (0.5.0)
+      activerecord (>= 3.0.0)
 
 GEM
   remote: http://rubygems.org/
@@ -33,8 +33,6 @@ GEM
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.8.0)
     sqlite3 (1.3.5)
-    sqlite3-ruby (1.3.3)
-      sqlite3 (>= 1.3.3)
     tzinfo (0.3.31)
 
 PLATFORMS
@@ -45,4 +43,4 @@ DEPENDENCIES
   attribute-defaults!
   rake
   rspec
-  sqlite3-ruby
+  sqlite3

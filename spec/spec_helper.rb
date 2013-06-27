@@ -21,7 +21,11 @@ ActiveRecord::Base.connection.create_table :foos do |t|
 end
 
 class Foo < ActiveRecord::Base
-  attr_accessible :name, :age, :locale
+  if ActiveRecord::VERSION::STRING < '4.0'
+    attr_accessible :name, :age, :locale
+    attr_accessible :name
+  end
+
   attr_accessor   :birth_year
 
   attr_default    :description, "(no description)", :if => :blank?
@@ -34,7 +38,7 @@ Foo.create!(:name => 'Bogus') {|i| i.locale = nil }
 
 class Bar < Foo
   attr_accessor   :some_hash, :some_arr
-  attr_accessible :some_arr
+  attr_accessible :some_arr if ActiveRecord::VERSION::STRING < "4.0.0"
 
   attr_default    :some_hash, :default => {}
   attr_default    :some_arr, :default => [1, 2, 3], :if => :blank?

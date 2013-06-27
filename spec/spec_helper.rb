@@ -23,7 +23,6 @@ end
 class Foo < ActiveRecord::Base
   if ActiveRecord::VERSION::STRING < '4.0'
     attr_accessible :name, :age, :locale
-    attr_accessible :name
   end
 
   attr_accessor   :birth_year

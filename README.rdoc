@@ -1,5 +1,7 @@
 = Attribute Defaults (attribute-defaults)
 
+{<img src="https://travis-ci.org/bsm/attribute-defaults.png?branch=master" alt="Build Status" />}[https://travis-ci.org/bsm/attribute-defaults]
+
 Simple ActiveRecord plugin that allows to specify default values for attributes.
 
 == Installation

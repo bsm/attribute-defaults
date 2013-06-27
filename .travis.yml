@@ -1,8 +1,19 @@
 rvm:
-  - 1.9.2
   - 1.9.3
+  - 2.0.0
 gemfile:
   - Gemfile
   - Gemfile.activerecord-3.2.x
   - Gemfile.activerecord-3.1.x
   - Gemfile.activerecord-3.0.x
+env:
+  - "FORCE_PROTECTED_ATTRIBUTES=1"
+  - ""
+matrix:
+  exclude:
+- gemfile: Gemfile.activerecord-3.2.x
+  env: "FORCE_PROTECTED_ATTRIBUTES=1"
+- gemfile: Gemfile.activerecord-3.1.x
+  env: "FORCE_PROTECTED_ATTRIBUTES=1"
+- gemfile: Gemfile.activerecord-3.0.x
+  env: "FORCE_PROTECTED_ATTRIBUTES=1"

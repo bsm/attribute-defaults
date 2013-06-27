@@ -41,10 +41,8 @@ describe ActiveRecord::AttributesWithDefaults do
   end
 
   it 'should work with protected attributes' do
-    if ActiveRecord::VERSION::STRING < "4.0.0"
-      foo(:description => 'Custom').description.should == '(no description)'
-    end
-  end
+    foo(:description => 'Custom').description.should == '(no description)'
+  end if USE_PROTECTED_ATTRIBUTES
 
   it 'should correctly apply defaults in subclasses' do
     bar.description.should == '(no description)'

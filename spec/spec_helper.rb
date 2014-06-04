@@ -49,3 +49,9 @@ class Baz < ActiveRecord::Base
   self.table_name = 'foos'
   attr_defaults :description => "Please set ...", :age => { :default => 18, :persisted => false }, :locale => proc { 'en-US' }
 end
+
+RSpec.configure do |c|
+  c.expect_with :rspec do |c|
+    c.syntax = [:expect, :should]
+  end
+end

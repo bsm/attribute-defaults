@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    attribute-defaults (0.6.0)
-      activerecord (>= 3.0.0)
+    attribute-defaults (0.7.0)
+      activerecord (>= 4.0.0, < 5.0.0)
 
 GEM
   remote: http://rubygems.org/

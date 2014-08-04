@@ -1,11 +1,9 @@
 rvm:
   - 2.0.0
-  - 2.1.1
+  - 2.1.2
 gemfile:
   - Gemfile
-  - Gemfile.activerecord-3.2.x
-  - Gemfile.activerecord-3.1.x
-  - Gemfile.activerecord-3.0.x
+  - Gemfile.activerecord-4.0.x
 env:
   - "FORCE_PROTECTED_ATTRIBUTES=1"
   - ""

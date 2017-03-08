@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.files        = Dir['LICENSE', 'README.rdoc', 'lib/**/*']
 
-  s.add_dependency "activerecord", ">= 4.0.0", "< 5.0.0"
+  s.add_dependency "activerecord", ">= 4.0.0", "< 6.0.0"
   s.add_development_dependency "rake"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec"

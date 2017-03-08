@@ -1,13 +1,20 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe ActiveRecord::AttributesWithDefaults do
+RSpec.describe ActiveRecord::AttributesWithDefaults do
+
+  after do
+    Foo.delete_all
+    Bar.delete_all
+    Baz.delete_all
+  end
+
 
   def foo(options = {})
-    @foo ||= Foo.new options.reverse_merge(:age => 30)
+    @foo ||= Foo.new options.reverse_merge(age: 30)
   end
 
   def bar(options = {})
-    @bar ||= Bar.new options.reverse_merge(:age => 30)
+    @bar ||= Bar.new options.reverse_merge(age: 30)
   end
 
   def baz(options = {})
@@ -15,63 +22,65 @@ describe ActiveRecord::AttributesWithDefaults do
   end
 
   it 'should initialize records setting defaults' do
-    foo.description.should == '(no description)'
-    foo.locale.should == 'en'
-    foo.birth_year.should == 30.years.ago.year
+    expect(foo.description).to eq('(no description)')
+    expect(foo.locale).to eq('en')
+    expect(foo.birth_year).to eq(30.years.ago.year)
   end
 
   it 'should allow to set custom value conditions' do
-    foo(:locale => '', :description => '')
-    foo.locale.should == ''
-    foo.description.should == '(no description)'
+    foo(locale: '', description: '')
+    expect(foo.locale).to eq('')
+    expect(foo.description).to eq('(no description)')
 
-    Bar.new(:some_arr => nil).some_arr.should == [1, 2, 3]
-    Bar.new(:some_arr => []).some_arr.should == [1, 2, 3]
-    Bar.new(:some_arr => [:A, :B]).some_arr.should == [:A, :B]
+    expect(Bar.new(some_arr: nil).some_arr).to eq([1, 2, 3])
+    expect(Bar.new(some_arr: []).some_arr).to eq([1, 2, 3])
+    expect(Bar.new(some_arr: [:A, :B]).some_arr).to eq([:A, :B])
   end
 
   it 'should not override attributes that were set manually' do
-    foo(:locale => 'en-GB').locale.should == 'en-GB'
+    expect(foo(locale: 'en-GB').locale).to eq('en-GB')
   end
 
-  it 'should respect :persisted => false option' do
+  it 'should respect persisted: false option' do
+    foo = Foo.new
+    foo.locale = nil
+    foo.save!
+
     persisted = Foo.first
-    persisted.description.should == '(no description)'
-    persisted.locale.should be_nil
+    expect(persisted.description).to eq('(no description)')
+    expect(persisted.locale).to be_nil
   end
-
-  it 'should work with protected attributes' do
-    foo(:description => 'Custom').description.should == '(no description)'
-  end if USE_PROTECTED_ATTRIBUTES
 
   it 'should correctly apply defaults in subclasses' do
-    bar.description.should == '(no description)'
-    bar.locale.should == 'en'
-    bar.birth_year.should == 30.years.ago.year
+    expect(bar.description).to eq('(no description)')
+    expect(bar.locale).to eq('en')
+    expect(bar.birth_year).to eq(30.years.ago.year)
   end
 
   it 'should allow mass-assignment' do
-    baz.description.should == 'Please set ...'
-    baz.locale.should == 'en-US'
-    baz.age.should == 18
+    expect(baz.description).to eq('Please set ...')
+    expect(baz.locale).to eq('en-US')
+    expect(baz.age).to eq(18)
 
+    baz.age = nil
+    baz.save!
     persisted = Baz.first
-    persisted.age.should be_nil
+    expect(persisted.age).to be_nil
   end
 
   it 'should allow Hashes as default values' do
-    bar.some_hash.should == {}
+    expect(bar.some_hash).to eq({})
   end
 
   it 'should ensure default values are duplicated' do
     bar.some_hash[:a] = 'A'
-    bar.some_hash.should == {:a => 'A'}
-    Bar.new.some_hash.should == {}
+    expect(bar.some_hash).to eq({a: 'A'})
+    expect(Bar.new.some_hash).to eq({})
   end
 
   it 'should handle missing attributes (e.g. in case of Base#exists?)' do
-    lambda { Foo.exists? }.should_not raise_error
-    lambda { Foo.select(:locale).first }.should_not raise_error
+    expect { Foo.exists? }.to_not raise_error
+    expect { Foo.select(:locale).first }.to_not raise_error
   end
 
 end

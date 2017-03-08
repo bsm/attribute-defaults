@@ -13,9 +13,9 @@ module ActiveRecord
       #   attr_default    :age do |record|
       #     Time.zone.year - record.dob.year
       #   end
-      #   attr_default    :description, '(none)', :if => :blank
-      #   attr_default    :description, '(none)', :persisted => false
-      #   attr_default    :description, :default => '(none)', :persisted => false
+      #   attr_default    :description, '(none)', if: :blank
+      #   attr_default    :description, '(none)', persisted: false
+      #   attr_default    :description, default: '(none)', persisted: false
       def attr_default(sym, *args, &block)
         options = args.extract_options!
         default = options.delete(:default) || args.shift
@@ -23,7 +23,7 @@ module ActiveRecord
 
         evaluator = "__eval_attr_default_for_#{sym}".to_sym
         setter    = "__set_attr_default_for_#{sym}".to_sym
-        block   ||= default.is_a?(Proc) ? default : proc { default }
+        block   ||= default.is_a?(Proc) ? default : -> { default }
 
         after_initialize setter.to_sym
         define_method(evaluator, &block)
@@ -41,9 +41,9 @@ module ActiveRecord
       end
 
       # Default mass-assignment. Examples:
-      #   attr_defaults   :description => '(none)', :age => 12
-      #   attr_defaults   :description => '(none)', :age => lambda {|r| Time.zone.year - r.dob.year }
-      #   attr_defaults   :description => '(none)', :age => { :default => 12, :persisted => false }
+      #   attr_defaults   description: '(none)', age: 12
+      #   attr_defaults   description: '(none)', age: ->r { Time.zone.year - r.dob.year }
+      #   attr_defaults   description: '(none)', age: { default: 12, persisted: false }
       def attr_defaults(pairs)
         pairs.each do |pair|
           attr_default *pair

@@ -6,7 +6,6 @@ module ActiveRecord
     extend ActiveSupport::Concern
 
     module ClassMethods
-
       # Set defaults. Examples:
       #   attr_default    :age, 12
       #   attr_default    :description, '(none)'
@@ -41,20 +40,18 @@ module ActiveRecord
       end
 
       # Default mass-assignment. Examples:
-      #   attr_defaults   description: '(none)', age: 12
-      #   attr_defaults   description: '(none)', age: ->r { Time.zone.year - r.dob.year }
-      #   attr_defaults   description: '(none)', age: { default: 12, persisted: false }
+      #   attr_defaults description: '(none)', age: 12
+      #   attr_defaults description: '(none)', age: ->r { Time.zone.year - r.dob.year }
+      #   attr_defaults description: '(none)', age: { default: 12, persisted: false }
       def attr_defaults(pairs)
         pairs.each do |pair|
-          attr_default *pair
+          attr_default(*pair)
         end
       end
-
     end
   end
 
   class Base
     include AttributesWithDefaults
   end
-
 end

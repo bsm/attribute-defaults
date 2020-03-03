@@ -1,4 +1,4 @@
-$: << File.dirname(__FILE__) + '/../lib'
+$LOAD_PATH << File.dirname(__FILE__) + '/../lib'
 require 'rubygems'
 require 'bundler'
 Bundler.setup
@@ -10,7 +10,7 @@ require 'rspec'
 require 'fileutils'
 require 'attribute_defaults'
 
-ActiveRecord::Base.configurations["test"] = { 'adapter' => 'sqlite3', 'database' => ":memory:" }
+ActiveRecord::Base.configurations = { 'test' => { 'adapter' => 'sqlite3', 'database' => ':memory:' } }
 ActiveRecord::Base.establish_connection :test
 ActiveRecord::Base.connection.create_table :foos do |t|
   t.string   :name
@@ -23,8 +23,8 @@ end
 class Foo < ActiveRecord::Base
   attr_accessor   :birth_year
 
-  attr_default    :description, "(no description)", if: :blank?
-  attr_default    :locale, "en", persisted: false
+  attr_default    :description, '(no description)', if: :blank?
+  attr_default    :locale, 'en', persisted: false
   attr_default    :birth_year do |f|
     f.age ? Time.now.year - f.age : nil
   end
@@ -40,5 +40,5 @@ end
 class Baz < ActiveRecord::Base
   self.table_name = 'foos'
 
-  attr_defaults description: "Please set ...", age: { default: 18, persisted: false }, locale: -> { 'en-US' }
+  attr_defaults description: 'Please set ...', age: { default: 18, persisted: false }, locale: -> { 'en-US' }
 end

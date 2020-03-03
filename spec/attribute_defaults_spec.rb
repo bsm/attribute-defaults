@@ -1,13 +1,11 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 RSpec.describe ActiveRecord::AttributesWithDefaults do
-
   after do
     Foo.delete_all
     Bar.delete_all
     Baz.delete_all
   end
-
 
   def foo(options = {})
     @foo ||= Foo.new options.reverse_merge(age: 30)
@@ -17,7 +15,7 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
     @bar ||= Bar.new options.reverse_merge(age: 30)
   end
 
-  def baz(options = {})
+  def baz(_options = {})
     @baz ||= Baz.new
   end
 
@@ -34,7 +32,7 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
 
     expect(Bar.new(some_arr: nil).some_arr).to eq([1, 2, 3])
     expect(Bar.new(some_arr: []).some_arr).to eq([1, 2, 3])
-    expect(Bar.new(some_arr: [:A, :B]).some_arr).to eq([:A, :B])
+    expect(Bar.new(some_arr: %i[A B]).some_arr).to eq(%i[A B])
   end
 
   it 'should not override attributes that were set manually' do
@@ -74,7 +72,7 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
 
   it 'should ensure default values are duplicated' do
     bar.some_hash[:a] = 'A'
-    expect(bar.some_hash).to eq({a: 'A'})
+    expect(bar.some_hash).to eq({ a: 'A' })
     expect(Bar.new.some_hash).to eq({})
   end
 
@@ -82,5 +80,4 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
     expect { Foo.exists? }.to_not raise_error
     expect { Foo.select(:locale).first }.to_not raise_error
   end
-
 end

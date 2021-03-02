@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 RSpec.describe ActiveRecord::AttributesWithDefaults do
   after do
@@ -19,13 +19,13 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
     @baz ||= Baz.new
   end
 
-  it 'should initialize records setting defaults' do
+  it 'initializes records setting defaults' do
     expect(foo.description).to eq('(no description)')
     expect(foo.locale).to eq('en')
     expect(foo.birth_year).to eq(30.years.ago.year)
   end
 
-  it 'should allow to set custom value conditions' do
+  it 'allows to set custom value conditions' do
     foo(locale: '', description: '')
     expect(foo.locale).to eq('')
     expect(foo.description).to eq('(no description)')
@@ -35,11 +35,11 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
     expect(Bar.new(some_arr: %i[A B]).some_arr).to eq(%i[A B])
   end
 
-  it 'should not override attributes that were set manually' do
+  it 'does not override attributes that were set manually' do
     expect(foo(locale: 'en-GB').locale).to eq('en-GB')
   end
 
-  it 'should respect persisted: false option' do
+  it 'respects persisted: false option' do
     foo = Foo.new
     foo.locale = nil
     foo.save!
@@ -49,13 +49,13 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
     expect(persisted.locale).to be_nil
   end
 
-  it 'should correctly apply defaults in subclasses' do
+  it 'correctlies apply defaults in subclasses' do
     expect(bar.description).to eq('(no description)')
     expect(bar.locale).to eq('en')
     expect(bar.birth_year).to eq(30.years.ago.year)
   end
 
-  it 'should allow mass-assignment' do
+  it 'allows mass-assignment' do
     expect(baz.description).to eq('Please set ...')
     expect(baz.locale).to eq('en-US')
     expect(baz.age).to eq(18)
@@ -66,18 +66,18 @@ RSpec.describe ActiveRecord::AttributesWithDefaults do
     expect(persisted.age).to be_nil
   end
 
-  it 'should allow Hashes as default values' do
+  it 'allows Hashes as default values' do
     expect(bar.some_hash).to eq({})
   end
 
-  it 'should ensure default values are duplicated' do
+  it 'ensures default values are duplicated' do
     bar.some_hash[:a] = 'A'
     expect(bar.some_hash).to eq({ a: 'A' })
     expect(Bar.new.some_hash).to eq({})
   end
 
-  it 'should handle missing attributes (e.g. in case of Base#exists?)' do
-    expect { Foo.exists? }.to_not raise_error
-    expect { Foo.select(:locale).first }.to_not raise_error
+  it 'handles missing attributes (e.g. in case of Base#exists?)' do
+    expect { Foo.exists? }.not_to raise_error
+    expect { Foo.select(:locale).first }.not_to raise_error
   end
 end

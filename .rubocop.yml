@@ -1,6 +1,9 @@
-require: rubocop-performance
-inherit_from:
-  - https://gitlab.com/bsm/misc/raw/master/rubocop/default.yml
+inherit_gem:
+  rubocop-bsm:
+    - default.yml
+inherit_mode:
+  merge:
+    - Exclude
 
 AllCops:
   TargetRubyVersion: "2.5"

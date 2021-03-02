@@ -28,13 +28,13 @@ module ActiveRecord
         define_method(evaluator, &block)
 
         module_eval(<<-EVAL, __FILE__, __LINE__ + 1)
-          def #{setter}
-            #{'return if persisted?' if options[:persisted] == false}
-            return unless self.#{sym}.send(:#{options[:if] || 'nil?'})
-            value = #{evaluator}#{'(self)' unless block.arity.zero?}
-            self.#{sym} = value.duplicable? ? value.dup : value
-          rescue ActiveModel::MissingAttributeError
-          end
+          def #{setter}                                               # def __set_attr_default_for_age
+            #{'return if persisted?' if options[:persisted] == false} #   return if persisted?
+            return unless #{sym}.send(:#{options[:if] || 'nil?'})     #   return unless age.nil?
+            value = #{evaluator}#{'(self)' unless block.arity.zero?}  #   value = __eval_attr_default_for_age(self)
+            self.#{sym} = value.duplicable? ? value.dup : value       #   self.age = value.duplicable? ? value.dup : value
+          rescue ActiveModel::MissingAttributeError                   # rescue ActiveModel::MissingAttributeError
+          end                                                         # end
         EVAL
         private evaluator, setter
       end

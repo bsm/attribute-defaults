@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 2.5.0'
+  s.required_ruby_version = '>= 2.6'
 
   s.name        = 'attribute-defaults'
   s.summary     = 'Specify default values for ActiveRecord attributes'
   s.description = 'ActiveRecord plugin that allows to specify default values for attributes'
-  s.version     = '0.9.0'
+  s.version     = '0.9.1'
 
   s.authors     = ['Dimitrij Denissenko']
   s.email       = 'dimitrij@blacksquaremedia.com'

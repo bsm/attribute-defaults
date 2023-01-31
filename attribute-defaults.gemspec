@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name        = 'attribute-defaults'
   s.summary     = 'Specify default values for ActiveRecord attributes'
   s.description = 'ActiveRecord plugin that allows to specify default values for attributes'
-  s.version     = '0.9.2'
+  s.version     = '0.9.3'
 
   s.authors     = ['Dimitrij Denissenko']
   s.email       = 'dimitrij@blacksquaremedia.com'
@@ -15,9 +15,5 @@ Gem::Specification.new do |s|
   s.files        = Dir['LICENSE', 'README.rdoc', 'lib/**/*']
 
   s.add_dependency 'activerecord', '>= 5.0.0', '< 8.0.0'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rubocop-bsm'
-  s.add_development_dependency 'sqlite3'
   s.metadata['rubygems_mfa_required'] = 'true'
 end

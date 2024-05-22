@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name        = 'attribute-defaults'
   s.summary     = 'Specify default values for ActiveRecord attributes'
   s.description = 'ActiveRecord plugin that allows to specify default values for attributes'
-  s.version     = '0.9.3'
+  s.version     = '0.9.4'
 
   s.authors     = ['Dimitrij Denissenko']
   s.email       = 'dimitrij@blacksquaremedia.com'
